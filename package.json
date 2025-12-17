@@ -1,13 +1,35 @@
 {
   "name": "vite-plugin-tar",
-  "private": true,
   "version": "0.0.1",
   "type": "module",
+  "description": "A Vite plugin to create tar.gz archives of your build output",
+  "keywords": ["vite", "vite-plugin", "tar", "gzip", "archive", "build"],
+  "homepage": "https://github.com/lonecry/vite-plugin-tar",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lonecry/vite-plugin-tar.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lonecry/vite-plugin-tar/issues"
+  },
+  "main": "./dist/vite-plugin-tar.umd.cjs",
+  "module": "./dist/vite-plugin-tar.js",
+  "types": "./dist/vite-plugin-tar.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/vite-plugin-tar.js",
+      "require": "./dist/vite-plugin-tar.umd.cjs",
+      "types": "./dist/vite-plugin-tar.d.ts"
+    }
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepublishOnly": "npm run build"
   },
+  "author": "Your Name <your.email@example.com>",
+  "license": "MIT",
   "devDependencies": {
     "@types/node": "^25.0.3",
     "vite": "^4.5.14"

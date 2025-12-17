@@ -1,4 +1,3 @@
-// vite.config.js
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
 
@@ -7,14 +6,23 @@ export default defineConfig({
         lib: {
             entry: resolve(__dirname, 'src/vite-plugin-tar.ts'),
             name: 'vite-plugin-tar',
-            // the proper extensions will be added
-            fileName: 'vite-plugin-tar'
-        } ,
+            fileName: 'vite-plugin-tar',
+            formats: ['es', 'umd']
+        },
         rollupOptions: {
-            external: ['tar', 'minipass', 'fs', 'path', 'zlib']
-        }
+            external: ['tar', 'minipass', 'fs', 'path', 'zlib'],
+            output: {
+                // 确保在 UMD 构建中正确处理 Node.js 模块
+                globals: {
+                    path: 'path',
+                    fs: 'fs',
+                    zlib: 'zlib'
+                }
+            }
+        },
+        // 生成类型声明文件
+        sourcemap: true
     },
-    // 配置 Node.js 模块的外部化
     optimizeDeps: {
         exclude: ['tar', 'minipass', 'fs', 'path', 'zlib']
     }
