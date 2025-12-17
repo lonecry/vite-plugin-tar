@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-targz",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "type": "module",
   "description": "A Vite plugin to create tar.gz archives of your build output",
   "keywords": ["vite", "vite-plugin", "tar", "gzip", "archive", "build"],
@@ -26,7 +26,6 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "prepublishOnly": "npm run build",
     "publish": "npm publish"
   },
   "author": "Your Name <your.email@example.com>",
