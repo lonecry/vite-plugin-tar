@@ -1,7 +1,7 @@
 import path from 'path';
 import fs from 'fs';
 import zlib from 'zlib';
-import * as tar from 'tar'; // 修复：使用命名空间导入
+import * as tar from 'tar';
 import type {ResolvedConfig} from "vite";
 
 export interface TarGzPluginOptions {
@@ -75,17 +75,13 @@ export default function tarGzPlugin(options: TarGzPluginOptions = {}) {
                     const gzip = zlib.createGzip({
                         level: compressionLevel
                     });
-
                     const readStream = fs.createReadStream(tarPath);
                     const writeStream = fs.createWriteStream(gzPath);
-
                     readStream.pipe(gzip).pipe(writeStream);
-
                     writeStream.on('finish', () => {
                         // 删除临时的 .tar 文件
                         fs.unlinkSync(tarPath);
                         console.log(`✅ tar.gz 压缩包生成成功: ${gzPath}`);
-
                         const stats = fs.statSync(gzPath);
                         console.log(`📦 文件大小: ${(stats.size / 1024 / 1024).toFixed(2)} MB`);
                         resolve();
