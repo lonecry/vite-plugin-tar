@@ -16,7 +16,7 @@ export default function tarGzPlugin(options: TarGzPluginOptions = {}) {
     const {
         fileName = 'dist',
         outputPath,
-        folderPath,
+        folderPath='./dist',
         enabled = true,
         compressionLevel = 9
     } = options;
@@ -59,22 +59,15 @@ export default function tarGzPlugin(options: TarGzPluginOptions = {}) {
                 if (!fs.existsSync(finalOutputPath)) {
                     fs.mkdirSync(finalOutputPath, { recursive: true });
                 }
-
-                // 删除已存在的文件
-                [tarPath, gzPath].forEach(filePath => {
-                    if (fs.existsSync(filePath)) {
-                        fs.unlinkSync(filePath);
-                    }
-                });
-
                 // 创建 tar 包
                 await tar.c(
                     {
                         gzip: false, // 先创建.tar包，再单独进行gzip压缩
                         file: tarPath,
-                        cwd: path.dirname(distPath), // 设置基准目录
+                        cwd: path.resolve(folderPath), // 设置基准目录
+                        prefix:''
                     },
-                    [path.basename(distPath)] // 只打包目标目录
+                    ['.'] // 只打包目标目录
                 );
 
                 // 创建 gzip 压缩
