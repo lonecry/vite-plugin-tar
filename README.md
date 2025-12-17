@@ -12,7 +12,7 @@ A Vite plugin to automatically create tar.gz archives of your build output.
 ## Installation
 
 ```bash
-npm install vite-plugin-tar --save-dev
+npm install vite-plugin-targz --save-dev
 ```
 
 ## Usage
@@ -21,11 +21,11 @@ Add the plugin to your `vite.config.js` or `vite.config.ts`:
 
 ```javascript
 import { defineConfig } from 'vite'
-import vitePluginTar from 'vite-plugin-tar'
+import vitePluginTargz from 'vite-plugin-targz'
 
 export default defineConfig({
   plugins: [
-    vitePluginTar({
+      vitePluginTargz({
       // Optional configuration
       fileName: 'my-app', // Default: 'dist'
       outputPath: './archives', // Default: build output directory's parent

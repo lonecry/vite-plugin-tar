@@ -4,9 +4,9 @@ import { defineConfig } from 'vite'
 export default defineConfig({
     build: {
         lib: {
-            entry: resolve(__dirname, 'src/vite-plugin-tar.ts'),
-            name: 'vite-plugin-tar',
-            fileName: 'vite-plugin-tar',
+            entry: resolve(__dirname, 'src/vite-plugin-targz.ts'),
+            name: 'vite-plugin-targz',
+            fileName: 'vite-plugin-targz',
             formats: ['es', 'umd']
         },
         rollupOptions: {
