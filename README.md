@@ -1,4 +1,4 @@
-# vite-plugin-tar
+# vite-plugin-targz
 
 A Vite plugin to automatically create tar.gz archives of your build output.
 
@@ -27,8 +27,8 @@ export default defineConfig({
   plugins: [
       vitePluginTargz({
       // Optional configuration
-      fileName: 'my-app', // Default: 'dist'
-      outputPath: './archives', // Default: build output directory's parent
+      fileName: 'dist', // Default: 'dist'
+      outputPath: './dist', // Default: build output directory's parent
       folderPath: './custom-build-folder', // Default: vite's build.outDir
       compressionLevel: 9, // Default: 9 (highest)
       enabled: true // Default: true

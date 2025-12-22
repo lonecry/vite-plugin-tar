@@ -1,6 +1,5 @@
 import path from 'path';
 import fs from 'fs';
-import zlib from 'zlib';
 import * as tar from 'tar';
 import type {ResolvedConfig} from "vite";
 
@@ -50,9 +49,7 @@ export default function tarGzPlugin(options: TarGzPluginOptions = {}) {
                     return;
                 }
 
-                const tarFileName = `${fileName}.tar`;
                 const gzFileName = `${fileName}.tar.gz`;
-                const tarPath = path.join(finalOutputPath, tarFileName);
                 const gzPath = path.join(finalOutputPath, gzFileName);
 
                 // 确保输出目录存在
@@ -62,33 +59,18 @@ export default function tarGzPlugin(options: TarGzPluginOptions = {}) {
                 // 创建 tar 包
                 await tar.c(
                     {
-                        gzip: false, // 先创建.tar包，再单独进行gzip压缩
-                        file: tarPath,
+                        gzip: {
+                            level: compressionLevel
+                        },
+                        file: gzPath,
                         cwd: path.resolve(folderPath), // 设置基准目录
                         prefix:''
                     },
                     ['.'] // 只打包目标目录
                 );
-
-                // 创建 gzip 压缩
-                await new Promise<void>((resolve, reject) => {
-                    const gzip = zlib.createGzip({
-                        level: compressionLevel
-                    });
-                    const readStream = fs.createReadStream(tarPath);
-                    const writeStream = fs.createWriteStream(gzPath);
-                    readStream.pipe(gzip).pipe(writeStream);
-                    writeStream.on('finish', () => {
-                        // 删除临时的 .tar 文件
-                        fs.unlinkSync(tarPath);
-                        console.log(`✅ tar.gz 压缩包生成成功: ${gzPath}`);
-                        const stats = fs.statSync(gzPath);
-                        console.log(`📦 文件大小: ${(stats.size / 1024 / 1024).toFixed(2)} MB`);
-                        resolve();
-                    });
-
-                    writeStream.on('error', reject);
-                });
+                console.log(`✅ tar.gz 压缩包生成成功: ${gzPath}`);
+                const stats = fs.statSync(gzPath);
+                console.log(`📦 文件大小: ${(stats.size / 1024 / 1024).toFixed(2)} MB`);
 
             } catch (error) {
                 console.error('❌ 生成 tar.gz 压缩包时出错:', error);
